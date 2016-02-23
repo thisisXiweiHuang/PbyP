@@ -14,7 +14,7 @@ void draw() {
   background(0);
   translate(width/2, height/2);
   for (int i =0; i<3; i++) {
-    pts[i] = new PVector(sin(radians(i*120+num))*radius/2, cos(radians(i*120+num))*radius/2);
+    pts[i] = new PVector(sin(radians(i*120+num))*radius, cos(radians(i*120+num))*radius);
   }
 
   for (int x=-radius; x<radius; x+=d) {
@@ -44,7 +44,7 @@ num += map(mouseX,0,width,4,-4);
 //return 0<=a/b/c=1;
 
 
-boolean inTriangle ( PVector l) {
+boolean inTriangle ( PVector mouseX) {
 
   PVector p1= pts[0];
   PVector p2= pts[1];
@@ -54,16 +54,12 @@ boolean inTriangle ( PVector l) {
   float d=((p2.y - p3.y)*(p1.x - p3.x) + (p3.x - p2.x)*(p1.y - p3.y));
   //a
   //((y2 - y3)*(x - x3) + (x3 - x2)*(y - y3)) / 
-  float a= ((p2.y - p3.y)*(l.x - p3.x) + (p3.x - p2.x)*(l.y - p3.y))/d;
+  float a= ((p2.y - p3.y)*(mouseX.x - p3.x) + (p3.x - p2.x)*(mouseX.y - p3.y))/d;
   //b
   //((y3 - y1)*(x - x3) + (x1 - x3)*(y - y3))
-  float b= ((p3.y - p1.y)*(l.x - p3.x) + (p1.x - p3.x)*(l.y - p3.y))/d;
+  float b= ((p3.y - p1.y)*(mouseX.x - p3.x) + (p1.x - p3.x)*(mouseX.y - p3.y))/d;
 
   float c= 1-a-b;
 
   return 0 <= a && a <= 1 && 0 <= b && b <= 1 && 0 <= c && c <= 1;
 }
-
-
-
-
